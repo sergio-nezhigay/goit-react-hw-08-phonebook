@@ -33,6 +33,7 @@ export const GlobalStyles = css`
   ul,
   ol {
     /* list-style: none; */
+    list-style-position: inside;
     padding-left: 0;
     margin: 0;
   }
@@ -47,7 +48,7 @@ export const GlobalStyles = css`
   }
 
   a {
-    text-decoration: none;
+    /* text-decoration: none; */
     color: inherit;
   }
 

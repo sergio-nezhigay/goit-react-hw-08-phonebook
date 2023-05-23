@@ -1,13 +1,8 @@
 import React, { useId } from 'react';
-
+import { useDispatch } from 'react-redux';
 import { Formik, ErrorMessage } from 'formik';
 import { object, string } from 'yup';
-
-import {
-  useFetchContactsQuery,
-  useAddContactMutation,
-} from 'redux/contacts/contactsAPI';
-
+import { addContact } from 'redux/contacts/operations';
 import {
   StyledForm,
   Label,
@@ -38,23 +33,26 @@ let schema = object({
 });
 
 export function ContactForm() {
+  const dispatch = useDispatch();
   const id = useId().replace(/:/g, '');
-  const { data: contacts = [], isLoading } = useFetchContactsQuery();
-  const [addContact] = useAddContactMutation();
-  const onSubmit = ({ name, number }, { resetForm }) => {
-    if (
-      contacts.some(contact =>
-        contact.name.toLowerCase().includes(name.toLowerCase())
-      )
-    ) {
-      alert(`${name} is already in contacts.`);
-      return;
-    }
 
-    addContact({
-      name,
-      phone: number,
-    });
+  //   const [addContact] = useAddContactMutation();
+  const onSubmit = ({ name, number }, { resetForm }) => {
+    // if (
+    //   contacts.some(contact =>
+    //     contact.name.toLowerCase().includes(name.toLowerCase())
+    //   )
+    // ) {
+    //   alert(`${name} is already in contacts.`);
+    //   return;
+    // }
+
+    dispatch(
+      addContact({
+        name,
+        number,
+      })
+    );
     resetForm();
   };
 
@@ -81,9 +79,7 @@ export function ContactForm() {
           id={'number_' + id}
         />
         <ErrorMessage component={ErrorStyledMessage} name="number" />
-        <Button type="submit" disabled={isLoading}>
-          Add Contact
-        </Button>
+        <Button type="submit">Add Contact</Button>
       </StyledForm>
     </Formik>
   );
