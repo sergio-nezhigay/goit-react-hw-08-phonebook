@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Container } from './SharedLayout.styled';
 // import { Section } from 'components/Section/Section.styled';
-import { Section } from 'components/Section/Section';
+// import { Section } from 'components/Section/Section';
 
 import { AppBar } from 'components/AppBar/AppBar';
 
@@ -12,9 +12,7 @@ export default function SharedLayout() {
       <AppBar />
       <Suspense fallback={<div>Loading the app...</div>}>
         <main>
-          <Section>
-            <Outlet />
-          </Section>
+          <Outlet />
         </main>
       </Suspense>
     </Container>

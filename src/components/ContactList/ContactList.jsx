@@ -1,16 +1,17 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteContact } from 'redux/contacts/operations';
 // import { filterSelectors } from 'redux/filter';
 import { List, Li, DeleteButton, Text } from './ContactList.styled';
 import { selectAllContacts } from 'redux/contacts/selectors';
 
 export function ContactList() {
+  const dispatch = useDispatch();
   const contacts = useSelector(selectAllContacts);
 
   const onDelete = id => {
     console.log('🚀 ~ file: ContactList.jsx:17 ~ onDelete ~ id:', id);
-    // deleteContact(id);
+    dispatch(deleteContact(id));
   };
 
   //   const filter = useSelector(filterSelectors.selectFilter);
@@ -18,11 +19,11 @@ export function ContactList() {
 
   return (
     <List>
-      {contacts.map(({ id, phone, name }) => {
+      {contacts.map(({ id, number, name }) => {
         return (
           <Li key={id}>
             <Text>
-              {name}: {phone}
+              {name}: {number}
             </Text>
             <DeleteButton onClick={() => onDelete(id)} type="button">
               Delete

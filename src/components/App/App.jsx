@@ -8,7 +8,7 @@ import ContactsPage from 'Pages/ContactsPage/ContactsPage';
 import RegisterPage from 'Pages/RegisterPage/RegisterPage';
 import { refreshUser } from 'redux/auth/operations';
 import { useAuth } from 'hooks/useAuth';
-import Tasks from 'Pages/Tasks/Tasks';
+
 import { RestrictedRoute } from 'components/RestrictedRoute/ResrictedRoute';
 import { PrivateRoute } from 'components/ProvateRoute/PrivateRoute';
 
@@ -46,8 +46,6 @@ export const App = () => {
             <RestrictedRoute redirectTo="/contacts" component={<LoginPage />} />
           }
         />
-        <Route path="contacts" element={<ContactsPage />} />
-        {/* <Route path="tasks" element={<Tasks />} /> */}
         <Route
           path="/contacts"
           element={
