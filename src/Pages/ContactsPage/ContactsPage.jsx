@@ -6,6 +6,7 @@ import { fetchContacts } from 'redux/contacts/operations';
 import { selectLoading } from 'redux/contacts/selectors';
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import ContactList from 'components/ContactList/ContactList';
+import { Filter } from 'components/Filter/Filter';
 
 export default function ContactsPage() {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ export default function ContactsPage() {
       </Section>
 
       <Section title="Contacts">
-        {/* <Filter /> */}
+        <Filter />
         <ContactList />
       </Section>
     </>

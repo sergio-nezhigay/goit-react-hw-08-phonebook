@@ -1,15 +1,19 @@
-import React from 'react';
-import { Link } from './Navigation.styled';
-import { useAuth } from 'hooks/useAuth';
+import { UserMenu } from '../UserMenu/UserMenu';
+import { AuthNav } from '../AuthNav/AuthNav';
 
-export function Navigation() {
+import { useAuth } from 'hooks/useAuth';
+import { Link, Nav, Header } from './Navigation.styled';
+
+export const Navigation = () => {
   const { isLoggedIn } = useAuth();
 
   return (
-    <nav>
-      <Link to="/">Home</Link>
-
-      {isLoggedIn && <Link to="/contacts">Contacts</Link>}
-    </nav>
+    <Header>
+      <Nav>
+        <Link to="/">Home</Link>
+        {isLoggedIn && <Link to="/contacts">Contacts</Link>}
+        {isLoggedIn ? <UserMenu /> : <AuthNav />}
+      </Nav>
+    </Header>
   );
-}
+};
