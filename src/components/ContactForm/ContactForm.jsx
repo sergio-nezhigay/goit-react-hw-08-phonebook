@@ -4,7 +4,10 @@ import { Formik, Field } from 'formik';
 import { object, string } from 'yup';
 import { TextField, Button, Box } from '@mui/material';
 
-import { useAddContactMutation } from 'redux/contacts/contactsAPI';
+import {
+  useAddContactMutation,
+  useFetchContactsQuery,
+} from 'redux/contacts/contactsAPI';
 import { FormContainer, RowContainer } from './ContactForm.styled';
 
 const numberRegex =
@@ -36,11 +39,20 @@ const CustomTextField = ({ name, label, placeholder }) => (
 );
 
 export function ContactForm() {
+  const { data: contacts = [] } = useFetchContactsQuery();
   const [addContact] = useAddContactMutation();
 
   const dispatch = useDispatch();
   const handleSubmit = (values, { resetForm }) => {
     const { name, number } = values;
+    if (
+      contacts.some(contact =>
+        contact.name.toLowerCase().includes(name.toLowerCase())
+      )
+    ) {
+      alert(`${name} is already in contacts.`);
+      return;
+    }
     dispatch(addContact({ name, number }));
     resetForm();
   };
