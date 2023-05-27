@@ -1,5 +1,4 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import { Formik, Field } from 'formik';
 import { object, string } from 'yup';
 import { TextField, Button, Box } from '@mui/material';
@@ -8,7 +7,11 @@ import {
   useAddContactMutation,
   useFetchContactsQuery,
 } from 'redux/contacts/contactsAPI';
-import { FormContainer, RowContainer } from './ContactForm.styled';
+import {
+  FormContainer,
+  RowContainer,
+  ErrorContainer,
+} from './ContactForm.styled';
 
 const numberRegex =
   /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/;
@@ -41,20 +44,27 @@ const CustomTextField = ({ name, label, placeholder }) => (
 export function ContactForm() {
   const { data: contacts = [] } = useFetchContactsQuery();
   const [addContact] = useAddContactMutation();
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const dispatch = useDispatch();
-  const handleSubmit = (values, { resetForm }) => {
+  const handleSubmit = async (values, { resetForm }) => {
     const { name, number } = values;
     if (
       contacts.some(contact =>
         contact.name.toLowerCase().includes(name.toLowerCase())
       )
     ) {
-      alert(`${name} is already in contacts.`);
+      setErrorMessage(
+        `${name} is already in contacts. You can edit data in table below...`
+      );
       return;
     }
-    dispatch(addContact({ name, number }));
-    resetForm();
+    try {
+      setErrorMessage(``);
+      await addContact({ name, number }).unwrap();
+      resetForm();
+    } catch (err) {
+      console.error('Failed to save the post: ', err);
+    }
   };
 
   return (
@@ -76,6 +86,7 @@ export function ContactForm() {
             placeholder="Enter the number"
           />
         </RowContainer>
+        {errorMessage && <ErrorContainer>{errorMessage}</ErrorContainer>}
         <Button variant="contained" type="submit">
           Add Contact
         </Button>

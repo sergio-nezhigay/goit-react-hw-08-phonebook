@@ -25,3 +25,9 @@ export const RowContainer = ({ children }) => (
     {children}
   </div>
 );
+
+export const ErrorContainer = styled.h3`
+  color: red;
+  margin-top: 8px;
+  margin-bottom: 16px;
+`;
