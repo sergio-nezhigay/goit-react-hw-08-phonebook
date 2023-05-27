@@ -1,9 +1,9 @@
 {
   "files": {
     "main.css": "/goit-react-hw-08-phonebook/static/css/main.c3d5249d.css",
-    "main.js": "/goit-react-hw-08-phonebook/static/js/main.51f4850f.js",
+    "main.js": "/goit-react-hw-08-phonebook/static/js/main.fdd35717.js",
     "static/js/265.a4afe1a8.chunk.js": "/goit-react-hw-08-phonebook/static/js/265.a4afe1a8.chunk.js",
-    "static/js/989.3c4b18a6.chunk.js": "/goit-react-hw-08-phonebook/static/js/989.3c4b18a6.chunk.js",
+    "static/js/989.2228e74a.chunk.js": "/goit-react-hw-08-phonebook/static/js/989.2228e74a.chunk.js",
     "static/js/763.ae9521df.chunk.js": "/goit-react-hw-08-phonebook/static/js/763.ae9521df.chunk.js",
     "static/js/679.8332cd88.chunk.js": "/goit-react-hw-08-phonebook/static/js/679.8332cd88.chunk.js",
     "static/js/698.62e8affa.chunk.js": "/goit-react-hw-08-phonebook/static/js/698.62e8affa.chunk.js",
@@ -11,9 +11,9 @@
     "static/js/568.d315b44f.chunk.js": "/goit-react-hw-08-phonebook/static/js/568.d315b44f.chunk.js",
     "index.html": "/goit-react-hw-08-phonebook/index.html",
     "main.c3d5249d.css.map": "/goit-react-hw-08-phonebook/static/css/main.c3d5249d.css.map",
-    "main.51f4850f.js.map": "/goit-react-hw-08-phonebook/static/js/main.51f4850f.js.map",
+    "main.fdd35717.js.map": "/goit-react-hw-08-phonebook/static/js/main.fdd35717.js.map",
     "265.a4afe1a8.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/265.a4afe1a8.chunk.js.map",
-    "989.3c4b18a6.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/989.3c4b18a6.chunk.js.map",
+    "989.2228e74a.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/989.2228e74a.chunk.js.map",
     "763.ae9521df.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/763.ae9521df.chunk.js.map",
     "679.8332cd88.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/679.8332cd88.chunk.js.map",
     "698.62e8affa.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/698.62e8affa.chunk.js.map",
@@ -22,6 +22,6 @@
   },
   "entrypoints": [
     "static/css/main.c3d5249d.css",
-    "static/js/main.51f4850f.js"
+    "static/js/main.fdd35717.js"
   ]
 }
