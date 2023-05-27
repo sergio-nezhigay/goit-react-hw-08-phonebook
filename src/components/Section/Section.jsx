@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Title, SectionContainer } from './Section.styled';
+import Box from '@mui/material/Box';
+import { Legend } from './Section.styled';
 
 export const Section = ({ title, children }) => {
   return (
-    <SectionContainer>
-      <Title>{title}</Title>
+    <Box sx={{ padding: 3 }} component="fieldset">
+      <Legend>{title}</Legend>
       {children}
-    </SectionContainer>
+    </Box>
   );
 };
 

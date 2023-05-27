@@ -1,10 +1,15 @@
 import { useDispatch } from 'react-redux';
-import { logIn } from 'redux/auth/operations';
+import { TextField, Button, Typography } from '@mui/material';
 
-import { Form, Label } from './Loginform.styled';
+import { logIn } from 'redux/auth/operations';
+import { useAuth } from 'hooks/useAuth';
+
+import { Section } from 'components/Section/Section';
+import { Form } from './Loginform.styled';
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
+  const { authError } = useAuth();
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -19,16 +24,18 @@ export const LoginForm = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit} autoComplete="off">
-      <Label>
-        Email
-        <input type="email" name="email" />
-      </Label>
-      <Label>
-        Password
-        <input type="password" name="password" />
-      </Label>
-      <button type="submit">Log In</button>
-    </Form>
+    <Section title="Login">
+      <Form onSubmit={handleSubmit} autoComplete="off">
+        <Typography variant="h6" gutterBottom>
+          Please, enter your data to login:
+        </Typography>
+        <TextField label="Email" type="email" name="email" />
+        <TextField label="Password" type="password" name="password" />
+        {authError && <Typography color="error">{authError}</Typography>}
+        <Button type="submit" variant="contained">
+          Log In
+        </Button>
+      </Form>
+    </Section>
   );
 };

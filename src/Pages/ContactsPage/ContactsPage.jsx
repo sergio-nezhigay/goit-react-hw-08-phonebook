@@ -21,7 +21,6 @@ export default function ContactsPage() {
       <Helmet>
         <title>Your contacts</title>
       </Helmet>
-      {/* <TaskEditor /> */}
       <div>{isLoading && 'Request in progress...'}</div>
       <Section title="Phonebook">
         <ContactForm />

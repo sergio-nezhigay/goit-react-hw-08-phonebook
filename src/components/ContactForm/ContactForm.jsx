@@ -1,15 +1,11 @@
-import React, { useId } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Formik, ErrorMessage } from 'formik';
+import { Formik, Field } from 'formik';
 import { object, string } from 'yup';
+import { TextField, Button, Box } from '@mui/material';
+
 import { addContact } from 'redux/contacts/operations';
-import {
-  StyledForm,
-  Label,
-  StyledField,
-  ErrorStyledMessage,
-  Button,
-} from './ContactForm.styled';
+import { FormContainer, RowContainer } from './ContactForm.styled';
 
 const numberRegex =
   /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/;
@@ -17,42 +13,33 @@ const nameRegex = /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-я�
 const numberMessage = `Phone number must be digits and can contain spaces, dashes, parentheses and can start with +`;
 const nameMessage = `Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan`;
 
-let schema = object({
-  name: string()
-    .matches(nameRegex, {
-      message: nameMessage,
-      excludeEmptyString: true,
-    })
-    .required(),
-  number: string()
-    .matches(numberRegex, {
-      message: numberMessage,
-      excludeEmptyString: true,
-    })
-    .required(),
+const schema = object({
+  name: string().matches(nameRegex, nameMessage).required(),
+  number: string().matches(numberRegex, numberMessage).required(),
 });
+
+const CustomTextField = ({ name, label, placeholder }) => (
+  <Field name={name}>
+    {({ field, meta }) => (
+      <Box>
+        <TextField
+          {...field}
+          label={label}
+          fullWidth
+          placeholder={placeholder}
+          error={meta.touched && meta.error}
+          helperText={meta.touched && meta.error ? meta.error : ''}
+        />
+      </Box>
+    )}
+  </Field>
+);
 
 export function ContactForm() {
   const dispatch = useDispatch();
-  const id = useId().replace(/:/g, '');
-
-  //   const [addContact] = useAddContactMutation();
-  const onSubmit = ({ name, number }, { resetForm }) => {
-    // if (
-    //   contacts.some(contact =>
-    //     contact.name.toLowerCase().includes(name.toLowerCase())
-    //   )
-    // ) {
-    //   alert(`${name} is already in contacts.`);
-    //   return;
-    // }
-
-    dispatch(
-      addContact({
-        name,
-        number,
-      })
-    );
+  const handleSubmit = (values, { resetForm }) => {
+    const { name, number } = values;
+    dispatch(addContact({ name, number }));
     resetForm();
   };
 
@@ -60,27 +47,25 @@ export function ContactForm() {
     <Formik
       initialValues={{ name: '', number: '' }}
       validationSchema={schema}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
     >
-      <StyledForm>
-        <Label htmlFor={'name_' + id}>Name</Label>
-        <StyledField
-          type="text"
-          name="name"
-          placeholder="Enter the name"
-          id={'name_' + id}
-        />
-        <ErrorMessage component={ErrorStyledMessage} name="name" />
-        <Label htmlFor={'number_' + id}>Number</Label>
-        <StyledField
-          type="tel"
-          name="number"
-          placeholder="Enter the number"
-          id={'number_' + id}
-        />
-        <ErrorMessage component={ErrorStyledMessage} name="number" />
-        <Button type="submit">Add Contact</Button>
-      </StyledForm>
+      <FormContainer>
+        <RowContainer>
+          <CustomTextField
+            name="name"
+            label="Name"
+            placeholder="Enter the name"
+          />
+          <CustomTextField
+            name="number"
+            label="Number"
+            placeholder="Enter the number"
+          />
+        </RowContainer>
+        <Button variant="contained" type="submit">
+          Add Contact
+        </Button>
+      </FormContainer>
     </Formik>
   );
 }

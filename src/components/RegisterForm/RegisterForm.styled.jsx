@@ -1,10 +1,7 @@
-import styled from 'styled-components';
+import { styled } from '@mui/material';
 
-export const Form = styled.form`
-  width: 320px;
-`;
-export const Label = styled.label`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 16px;
-`;
+export const Form = styled('form')({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '16px',
+});

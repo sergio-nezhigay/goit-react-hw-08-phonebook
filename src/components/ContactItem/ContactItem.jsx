@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteContact, updateContact } from 'redux/contacts/operations';
+import { TextField, Button, Typography } from '@mui/material';
 
-import { Li, Button, Text } from './ContactItem.styled';
+import { StyledBox, StyledButton } from './ContactItem.styled';
 
 export function ContactItem({ id, number, name }) {
   const dispatch = useDispatch();
@@ -25,39 +26,67 @@ export function ContactItem({ id, number, name }) {
   };
 
   return (
-    <Li>
+    <li>
       {isEditMode ? (
         <>
-          <input
-            type="text"
-            value={editedName}
-            onChange={e => setEditedName(e.target.value)}
-          />
-          <input
-            type="text"
-            value={editedNumber}
-            onChange={e => setEditedNumber(e.target.value)}
-          />
-          <button onClick={handleUpdate} type="button">
-            Update
-          </button>
-          <button onClick={() => setEditing(false)} type="button">
-            Cancel
-          </button>
+          <StyledBox>
+            <TextField
+              type="text"
+              focused
+              value={editedName}
+              variant="standard"
+              onChange={e => setEditedName(e.target.value)}
+            />
+            <TextField
+              type="text"
+              focused
+              value={editedNumber}
+              variant="standard"
+              onChange={e => setEditedNumber(e.target.value)}
+            />
+            <StyledButton
+              onClick={handleUpdate}
+              variant="contained"
+              color="success"
+            >
+              Update
+            </StyledButton>
+            <Button
+              sx={{
+                minWidth: '7rem',
+              }}
+              onClick={() => setEditing(false)}
+              variant="contained"
+              color="error"
+            >
+              Cancel
+            </Button>
+          </StyledBox>
         </>
       ) : (
-        <>
-          <Text>
-            {name}: {number}
-          </Text>
-          <Button onClick={() => setEditing(true)} type="button">
+        <StyledBox>
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+            }}
+          >
+            {`${name}: `}
+          </Typography>
+          <Typography>{number}</Typography>
+          <StyledButton onClick={() => setEditing(true)} variant="contained">
             Edit
-          </Button>
-          <Button onClick={onDelete} type="button">
+          </StyledButton>
+          <Button
+            sx={{
+              minWidth: '7rem',
+            }}
+            onClick={onDelete}
+            variant="contained"
+          >
             Delete
           </Button>
-        </>
+        </StyledBox>
       )}
-    </Li>
+    </li>
   );
 }

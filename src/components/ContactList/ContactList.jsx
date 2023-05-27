@@ -1,16 +1,22 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+
 import { selectAllContacts } from 'redux/contacts/selectors';
 import { useFilter } from 'hooks/useFilter';
-
+import { ContactItem } from 'components/ContactItem/ContactItem';
 import { List } from './ContactList.styled';
 
-import { ContactItem } from 'components/ContactItem/ContactItem';
-
-function ContactList() {
+const ContactList = () => {
   const contacts = useSelector(selectAllContacts);
   const { filter } = useFilter();
-  const filteredContacts = contacts.filter(({ name }) => name.includes(filter));
+
+  const filteredContacts = React.useMemo(
+    () =>
+      contacts.filter(({ name }) =>
+        name.toLowerCase().includes(filter.toLowerCase())
+      ),
+    [contacts, filter]
+  );
 
   return (
     <List>
@@ -19,6 +25,6 @@ function ContactList() {
       ))}
     </List>
   );
-}
+};
 
 export default ContactList;

@@ -1,10 +1,15 @@
 import { useDispatch } from 'react-redux';
 import { register } from 'redux/auth/operations';
+import { TextField, Button, Typography } from '@mui/material';
 
-import { Form, Label } from './RegisterForm.styled';
+import { Section } from 'components/Section/Section';
+
+import { Form } from './RegisterForm.styled';
+import { useAuth } from 'hooks/useAuth';
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
+  const { authError } = useAuth();
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -20,20 +25,17 @@ export const RegisterForm = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit} autoComplete="off">
-      <Label>
-        Username
-        <input type="text" name="name" />
-      </Label>
-      <Label>
-        Email
-        <input type="email" name="email" />
-      </Label>
-      <Label>
-        Password
-        <input type="password" name="password" />
-      </Label>
-      <button type="submit">Register</button>
-    </Form>
+    <Section title="Submit">
+      <Form onSubmit={handleSubmit} autoComplete="off">
+        <Typography variant="h6">Please, enter your data to submit:</Typography>
+        <TextField label="Username" type="text" name="name" />
+        <TextField label="Email" type="email" name="email" />
+        <TextField label="Password" type="password" name="password" />
+        {authError && <Typography color="error">{authError}</Typography>}
+        <Button type="submit" variant="contained">
+          Register
+        </Button>
+      </Form>
+    </Section>
   );
 };

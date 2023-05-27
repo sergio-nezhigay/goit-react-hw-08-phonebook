@@ -1,14 +1,13 @@
-import React, { useId } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
+import { TextField } from '@mui/material';
 
 import { setFilter } from 'redux/filter/filterSlice';
-import { Label } from 'components/ContactForm/ContactForm.styled';
-import { InputShort } from './Filter.styled';
 import { useFilter } from 'hooks/useFilter';
 
 export function Filter() {
   const { filter } = useFilter();
-  const filterInputId = useId().replace(/:/g, '');
+
   const dispatch = useDispatch();
 
   const onChange = e => {
@@ -16,16 +15,13 @@ export function Filter() {
   };
 
   return (
-    <div>
-      <Label htmlFor={filterInputId}>Find contacts by name</Label>
-      <InputShort
-        type="text"
-        name="filter"
-        placeholder="Enter your search"
-        value={filter}
-        onChange={onChange}
-        id={filterInputId}
-      />
-    </div>
+    <TextField
+      type="text"
+      label="Find contacts by name"
+      name="filter"
+      placeholder="Enter your search"
+      value={filter}
+      onChange={onChange}
+    />
   );
 }

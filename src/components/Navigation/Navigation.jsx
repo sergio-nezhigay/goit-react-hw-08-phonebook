@@ -1,19 +1,29 @@
+import { AppBar, Toolbar, Container, Button, Box } from '@mui/material';
+
+import { Link, Nav } from './Navigation.styled';
+import { useAuth } from 'hooks/useAuth';
 import { UserMenu } from '../UserMenu/UserMenu';
 import { AuthNav } from '../AuthNav/AuthNav';
-
-import { useAuth } from 'hooks/useAuth';
-import { Link, Nav, Header } from './Navigation.styled';
 
 export const Navigation = () => {
   const { isLoggedIn } = useAuth();
 
   return (
-    <Header>
-      <Nav>
-        <Link to="/">Home</Link>
-        {isLoggedIn && <Link to="/contacts">Contacts</Link>}
-        {isLoggedIn ? <UserMenu /> : <AuthNav />}
-      </Nav>
-    </Header>
+    <AppBar position="static" sx={{ mb: 3 }}>
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Nav>
+            <Box sx={{ display: 'flex' }}>
+              {isLoggedIn && (
+                <Button color="inherit" component={Link} to="/contacts">
+                  Contacts
+                </Button>
+              )}
+            </Box>
+            {isLoggedIn ? <UserMenu /> : <AuthNav />}
+          </Nav>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 };
