@@ -5,6 +5,7 @@ export const Nav = styled.nav`
   display: flex;
   align-items: center;
   width: 100%;
+  justify-content: space-between;
 `;
 
 export const Link = styled(NavLink)`
