@@ -14,6 +14,9 @@ export const Navigation = () => {
         <Toolbar disableGutters>
           <Nav>
             <Box sx={{ display: 'flex' }}>
+              <Button color="inherit" component={Link} to="/">
+                Home
+              </Button>
               {isLoggedIn && (
                 <Button color="inherit" component={Link} to="/contacts">
                   Contacts
