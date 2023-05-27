@@ -4,7 +4,7 @@ import { Formik, Field } from 'formik';
 import { object, string } from 'yup';
 import { TextField, Button, Box } from '@mui/material';
 
-import { addContact } from 'redux/contacts/operations';
+import { useAddContactMutation } from 'redux/contacts/contactsAPI';
 import { FormContainer, RowContainer } from './ContactForm.styled';
 
 const numberRegex =
@@ -36,6 +36,8 @@ const CustomTextField = ({ name, label, placeholder }) => (
 );
 
 export function ContactForm() {
+  const [addContact] = useAddContactMutation();
+
   const dispatch = useDispatch();
   const handleSubmit = (values, { resetForm }) => {
     const { name, number } = values;

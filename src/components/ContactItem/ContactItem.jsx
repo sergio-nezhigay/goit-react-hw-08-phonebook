@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteContact, updateContact } from 'redux/contacts/operations';
+
+import {
+  useDeleteContactMutation,
+  useUpdateContactMutation,
+} from 'redux/contacts/contactsAPI';
+
 import { TextField, Button, Typography } from '@mui/material';
 
 import { StyledBox, StyledButton } from './ContactItem.styled';
@@ -10,19 +15,24 @@ export function ContactItem({ id, number, name }) {
   const [isEditMode, setEditing] = useState(false);
   const [editedName, setEditedName] = useState(name);
   const [editedNumber, setEditedNumber] = useState(number);
-
+  const [deleteContact] = useDeleteContactMutation();
+  const [updateContact] = useUpdateContactMutation();
   const onDelete = () => {
     dispatch(deleteContact(id));
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     const updatedContact = {
       id,
       name: editedName,
       number: editedNumber,
     };
-    dispatch(updateContact(updatedContact));
-    setEditing(false);
+    try {
+      await updateContact(updatedContact).unwrap();
+      setEditing(false);
+    } catch (err) {
+      console.error('Failed to save the post: ', err);
+    }
   };
 
   return (
