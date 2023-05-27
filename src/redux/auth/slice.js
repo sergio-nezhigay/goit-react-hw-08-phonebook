@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { register, logIn, logOut, refreshUser } from './operations';
 
 const initialState = {
@@ -9,19 +9,19 @@ const initialState = {
   error: null,
 };
 
-const handleAsyncAction = state => {
+const handlePending = state => {
   state.isRefreshing = true;
   state.error = null;
 };
 
-const handleAsyncActionFulfilled = (state, action) => {
+const handleFulfilled = (state, action) => {
   state.user = action.payload.user;
   state.token = action.payload.token;
   state.isLoggedIn = true;
   state.isRefreshing = false;
 };
 
-const handleAsyncActionRejected = (state, action) => {
+const handleRejected = (state, action) => {
   state.error = action.payload;
   state.isRefreshing = false;
 };
@@ -32,28 +32,25 @@ const authSlice = createSlice({
 
   extraReducers: builder => {
     builder
-      .addCase(register.pending, handleAsyncAction)
-      .addCase(register.fulfilled, handleAsyncActionFulfilled)
-      .addCase(register.rejected, handleAsyncActionRejected)
-      .addCase(logIn.pending, handleAsyncAction)
-      .addCase(logIn.fulfilled, handleAsyncActionFulfilled)
-      .addCase(logIn.rejected, handleAsyncActionRejected)
-      .addCase(logOut.pending, handleAsyncAction)
+      .addCase(register.fulfilled, handleFulfilled)
+      .addCase(logIn.fulfilled, handleFulfilled)
       .addCase(logOut.fulfilled, state => {
         state.user = { name: null, email: null };
         state.token = null;
         state.isLoggedIn = false;
         state.isRefreshing = false;
       })
-      .addCase(logOut.rejected, handleAsyncActionRejected)
-      .addCase(refreshUser.pending, handleAsyncAction)
       .addCase(refreshUser.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })
-      .addCase(refreshUser.rejected, handleAsyncActionRejected);
+      .addMatcher(isAnyOf(...getActions('pending')), handlePending)
+      .addMatcher(isAnyOf(...getActions('rejected')), handleRejected);
   },
 });
+
+const extraActions = [register, logIn, logOut, refreshUser];
+const getActions = type => extraActions.map(action => action[type]);
 
 export const authReducer = authSlice.reducer;
