@@ -3,7 +3,6 @@ import { register } from 'redux/auth/operations';
 import { TextField, Button, Typography } from '@mui/material';
 
 import { Section } from 'components/Section/Section';
-
 import { Form } from './RegisterForm.styled';
 import { useAuth } from 'hooks/useAuth';
 

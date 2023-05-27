@@ -29,7 +29,7 @@ const handleAsyncActionRejected = (state, action) => {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+
   extraReducers: builder => {
     builder
       .addCase(register.pending, handleAsyncAction)
