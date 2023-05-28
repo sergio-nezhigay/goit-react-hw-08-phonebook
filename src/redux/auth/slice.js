@@ -18,7 +18,6 @@ const handleFulfilled = (state, action) => {
 
 const handleRejected = (state, action) => {
   state.error = action.payload;
-  state.isRefreshing = false;
 };
 
 const authSlice = createSlice({
@@ -44,6 +43,10 @@ const authSlice = createSlice({
         state.isRefreshing = true;
         state.error = null;
       })
+      .addCase(refreshUser.rejected, state => {
+        state.error = action.payload;
+        state.isRefreshing = false;
+      })
       .addCase(register.pending, state => {
         state.error = null;
       })
@@ -57,7 +60,7 @@ const authSlice = createSlice({
   },
 });
 
-const extraActions = [register, logIn, logOut, refreshUser];
+const extraActions = [register, logIn, logOut];
 const getActions = type => extraActions.map(action => action[type]);
 
 export const authReducer = authSlice.reducer;
