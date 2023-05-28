@@ -9,11 +9,6 @@ const initialState = {
   error: null,
 };
 
-const handlePending = state => {
-  state.isRefreshing = true;
-  state.error = null;
-};
-
 const handleFulfilled = (state, action) => {
   state.user = action.payload.user;
   state.token = action.payload.token;
@@ -45,7 +40,19 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })
-      .addMatcher(isAnyOf(...getActions('pending')), handlePending)
+      .addCase(refreshUser.pending, state => {
+        state.isRefreshing = true;
+        state.error = null;
+      })
+      .addCase(register.pending, state => {
+        state.error = null;
+      })
+      .addCase(logIn.pending, state => {
+        state.error = null;
+      })
+      .addCase(logOut.pending, state => {
+        state.error = null;
+      })
       .addMatcher(isAnyOf(...getActions('rejected')), handleRejected);
   },
 });
