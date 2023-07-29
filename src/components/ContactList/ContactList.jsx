@@ -18,8 +18,8 @@ const ContactList = () => {
 
   return (
     <List>
-      {filteredContacts.map(({ id, number, name }) => (
-        <ContactItem key={id} id={id} number={number} name={name} />
+      {filteredContacts.map(({ _id: id, phone, name }) => (
+        <ContactItem key={id} id={id} phone={phone} name={name} />
       ))}
     </List>
   );

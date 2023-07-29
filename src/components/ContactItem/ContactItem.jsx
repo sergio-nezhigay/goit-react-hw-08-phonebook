@@ -10,11 +10,11 @@ import { TextField, Button, Typography } from '@mui/material';
 
 import { StyledBox, StyledButton } from './ContactItem.styled';
 
-export function ContactItem({ id, number, name }) {
+export function ContactItem({ id, phone, name }) {
   const dispatch = useDispatch();
   const [isEditMode, setEditing] = useState(false);
   const [editedName, setEditedName] = useState(name);
-  const [editedNumber, setEditedNumber] = useState(number);
+  const [editedNumber, setEditedNumber] = useState(phone);
   const [deleteContact] = useDeleteContactMutation();
   const [updateContact] = useUpdateContactMutation();
   const onDelete = () => {
@@ -25,7 +25,7 @@ export function ContactItem({ id, number, name }) {
     const updatedContact = {
       id,
       name: editedName,
-      number: editedNumber,
+      phone: editedNumber,
     };
     try {
       await updateContact(updatedContact).unwrap();
@@ -82,7 +82,7 @@ export function ContactItem({ id, number, name }) {
           >
             {`${name}: `}
           </Typography>
-          <Typography>{number}</Typography>
+          <Typography>{phone}</Typography>
           <StyledButton onClick={() => setEditing(true)} variant="contained">
             Edit
           </StyledButton>
